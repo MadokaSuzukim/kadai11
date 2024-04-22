@@ -5,7 +5,7 @@ kadai_11
 -Stand by me
 
 ## ③DEMO
-https://marupass.net/kadai_11/user.php
+https://marupass.net/kadai11/user.php
 
 ## ④工夫した点・こだわった点
 -
