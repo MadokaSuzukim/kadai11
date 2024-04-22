@@ -81,7 +81,13 @@ $ageGroups = $stmt->fetchAll(PDO::FETCH_ASSOC);
     font-size: 16px;
     color: #666;
 }
+.center-link {
+    text-align: center;
+    margin-top: 20px; /* 上部に余白を設定 */
+}
+
 </style>
+
 
     <div class="counter">
     <h3>登録者数</h3>
@@ -173,5 +179,10 @@ var chart = new Chart(ctx, {
     }
 });
 </script>
+<div class="center-link">
+    <a href="home.php">ホームに戻る</a>
+</div>
+
+
 </body>
 </html>

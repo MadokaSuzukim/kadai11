@@ -1,90 +1,117 @@
 <?php
-// funcs.php ファイルにデータベース接続関数 db_conn() が含まれていることを想定しています
+session_start();
+include("funcs.php");
+$pdo = db_conn();
 
-// ミッションとその説明を辞書で管理
-$missions = [
-    1 => ["description" => "1000円でできるだけ多くのアイテムを購入する", "budget" => 1000],
-    2 => ["description" => "果物だけで500円分購入する", "budget" => 500],
-    3 => ["description" => "カレーの具材を購入する", "budget" => 1500],
-    4 => ["description" => "ママの好きなお菓子を購入して一緒に食べる", "budget" => 500]
-];
-
-// フォームからの入力を処理
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // ユーザーが選択したミッションのIDを取得
-    $id = $_POST['id'];
-    // 選択されたミッションの詳細を取得
-    $selected_mission = $missions[$id];
-    // ミッションの説明を取得
-    $description = $selected_mission['des'];
-    echo "<h2>選択したミッション: " . $description . "</h2>";
-    echo "<p>このミッションの予算は " . $selected_mission['budget'] . "円です。</p>";
-    // ここで追加のユーザー入力を処理することが可能です
-    
-    // ミッション完了のログをデータベースに保存する
-    saveMissionLog($id, $des);
+if (!isset($_SESSION['parent_id'])) {
+    header('Location: login.php');
+    exit;
 }
 
-// ミッション完了のログをデータベースに保存する関数
-function saveMissionLog($id, $des) {
-    include "funcs.php";
-    $pdo = db_conn();
+// カテゴリーとその説明を辞書で管理
+$missions = [
+    'shopping' => [
+        ["description" => "1000円でできるだけ多くのアイテムを購入する", "budget" => 1000, "lesson" => "予算内で計画的に買い物をすることの大切さを学ぶ"],
+        ["description" => "果物だけで500円分購入する", "budget" => 500, "lesson" => "健康的な選択を意識する"]
+    ],
+    'play' => [
+        ["description" => "公園で一緒に鬼ごっこをする", "budget" => 0, "lesson" => "運動を通じて健康を促進する"],
+        ["description" => "家で映画のマラソンをする", "budget" => 300, "lesson" => "共有の体験を通じて家族の絆を深める"]
+    ],
+    // 他のカテゴリに対しても同様に追加
+];
+//     'craft' => 
+//         [
+//             "description" => "リサイクル材料で小物を作る",
+//             "budget" => 200,
+//             "lesson" => "特定のカテゴリに焦点を当てて選択するスキルを養う"
+//         ],
+//         [
+//             "description" => "自由研究のための実験セットを作る",
+//             "budget" => 1000,
+//             "lesson" => "特定のカテゴリに焦点を当てて選択するスキルを養う"
+//         ],
+//     'outing' => [
+//         [
+//             "description" => "近くの博物館を訪れる",
+//             "budget" => 500,
+//             "lesson" => "特定のカテゴリに焦点を当てて選択するスキルを養う"
+//         ],
+//         [
+//             "description" => "地元の祭りに参加する",
+//             "budget" => 100,
+//             "lesson" => "特定のカテゴリに焦点を当てて選択するスキルを養う"
+//         ],
+       
+//     ]
+// ]];
 
-    try {
-        // SQL文を準備
-        $stmt = $pdo->prepare('INSERT INTO mission (id, des, completed_at) VALUES (:id, :des, NOW())');
-        // パラメータをバインド
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->bindParam(':des', $des, PDO::PARAM_STR);
-        // SQL文を実行
-        $stmt->execute();
-        
-        // データベース接続を切断
-        $pdo = null;
-        
-        // ミッション完了のメッセージを表示
-        echo "ミッションが完了しました！おめでとうございます！";
-    } catch (PDOException $e) {
-        // エラーメッセージを出力
-        echo 'データベースエラー: ' . $e->getMessage();
-        // スクリプトの実行を停止
-        exit;
-    }
+// フォームから送信されたデータを受け取る
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $selectedCategory = $_POST['category']; // 選択されたカテゴリ
+    $selectedChildId = $_POST['child_id']; // 選択された子供のID
+    $categoryMissions = $missions[$selectedCategory];
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <title>ミッション選択</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            margin: auto;
+            display: none; /* Initially hidden */
+        }
+    </style>
 </head>
 <body>
-    <h1>ミッションを選択してください</h1>
-    <form action="" method="post">
-        <?php
-        foreach ($missions as $id => $mission) {
-            echo "<input type='radio' name='id' value='$id|" . $mission['description'] . "'> " . $mission['description'] . "<br>";
-        }
-        ?>
-        <button type="submit">ミッション開始</button>
+    <h2>ミッションを選択してください</h2>
+    <form id="missionForm" action="mission_start.php" method="post">
+        <select id="missions" name="missions">
+            <?php foreach ($categoryMissions as $mission): ?>
+                <option value="<?= htmlspecialchars($mission['description']) ?>">
+                    <?= htmlspecialchars($mission['description']) ?> - 予算: <?= htmlspecialchars($mission['budget']) ?>円
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <button type="button" onclick="startMission()">ミッション開始</button>
+
+    <?php if (!empty($lesson)): ?>
+        <script>alert('ミッションを開始します。\n教訓: <?= addslashes($lesson) ?>');</script>
+    <?php endif; ?>
+
+        <button type="button" onclick="stopMission()">ミッション終了</button>
     </form>
+    <div id="loading" class="loader"></div>
 
-    <!-- ボタンをクリックした際のHTML -->
-    <button onclick="completeMission()">ミッション完了</button>
-    <a href="mission_complete.php" class="navbar-brand">ミッション一覧</a>
-    <a href="home.php">ホームに戻る</a>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script src="game.js"></script>
+
     <script>
-        // ボタンをクリックした際のJavaScript
-        function completeMission() {
-            // サーバーにミッション完了を通知する処理
-            // ここでAjaxリクエストを使ってサーバーに通知を送信します
+        function startMission() {
+            document.getElementById('loading').style.display = 'block'; // ローディングアニメーションを表示
+        }
 
-            // 通知が成功した場合は、ミッション完了のおめでとう通知を表示する
+        function stopMission() {
+            document.getElementById('loading').style.display = 'none'; // ローディングアニメーションを停止
             alert("ミッションが完了しました！おめでとうございます！");
         }
     </script>
-
+    <a href="home.php">ホームに戻る</a>
 </body>
 </html>
-

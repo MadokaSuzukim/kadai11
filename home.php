@@ -51,8 +51,27 @@ $children = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </li>
         </ul>
-        <p><?= htmlspecialchars($_SESSION['name'] ?? 'ゲスト') ?>さん、こんにちは！今日も1日お疲れ様！</p>
+        <p><?= htmlspecialchars($_SESSION['name'] ?? 'ゲスト') ?>さん、こんにちは！今日も1日お疲れ様！</p><p>いけそうやったら今日ミッションやってみる？</p><p>無理やったらいいでー</p>
+        <a href="index.php" class="btn btn-primary">ペアレンツモード</a>
+        <a href="janken.html" class="btn btn-primary">こどもと遊ぶモード</a>
 
+
+
+        <h2>おうち療育プログラム</h2>
+            <form action="mission_select.php" method="post">
+    <select name="child_id">
+        <?php foreach ($children as $child): ?>
+            <option value="<?= $child['id'] ?>"><?= htmlspecialchars($child['name']) ?></option>
+        <?php endforeach; ?>
+    </select>
+    <select name="category">
+        <option value="shopping">買い物編を始める</option>
+        <option value="play">遊び編を始める</option>
+        <option value="craft">工作編を始める</option>
+        <option value="outing">おでかけ編を始める</option>
+    </select>
+    <button type="submit">ミッションを開始</button>
+</form>
         <h3>登録キッズ一覧</h3>
         <?php if (!empty($children)): ?>
             <table class="table">
@@ -73,6 +92,8 @@ $children = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <a href="delete_child.php?id=<?= $child['id'] ?>" onclick="return confirm('本当に削除しますか？');">削除</a>
                             <a href="dialy.php?child_id=<?= $child['id'] ?>">ストーリーを記録</a>
                              <a href="diary_list.php?child_id=<?= $child['id'] ?>">ストーリー一覧</a>
+                             <a href="mission_complete.php?child_id=<?= $child['id'] ?>">完了ミッション</a>
+
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -85,18 +106,7 @@ $children = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="count.php" class="btn btn-secondary">お子様登録データ分布参照</a>
          <!-- おうち療育プログラムのボタンを追加 -->
          <?php if (!empty($children)): ?>
-            <h2>おうち療育プログラム</h2>
-            <form action="mission_select.php" method="post">
-                <select name="child_id">
-                    <?php foreach ($children as $child): ?>
-                        <option value="<?= $child['id'] ?>"><?= htmlspecialchars($child['name']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <button type="submit">買い物編を始める</button>
-                <button type="submit">遊び編を始める</button>
-                <button type="submit">工作編を始める</button>
-                <button type="submit">おでかけ編を始める</button>
-            </form>
+          
         <?php endif; ?>
         <a href="logout.php">ログアウト</a>
 

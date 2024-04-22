@@ -1,0 +1,277 @@
+/* 全体的なページのレイアウトと背景設定 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0; /* デフォルトの背景色 */
+    color: #333; /* テキストのデフォルト色 */
+    text-align: center;
+    padding: 20px;
+    background-image: url('wall.png'); /* 背景画像 */
+    background-size: cover; /* 画像を画面いっぱいに表示 */
+    background-position: center; /* 画像を中央に配置 */
+    background-repeat: no-repeat; /* 画像の繰り返し無効 */
+}
+
+/* ヘッダーとタイトル */
+h2 {
+    color: #444; /* タイトルの色 */
+}
+/* スマートフォンなどの小さなデバイス用のスタイル */
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+/* タブレット用のスタイル */
+@media (min-width: 601px) and (max-width: 1024px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+/* デスクトップ用のスタイル */
+@media (min-width: 1025px) {
+    body {
+        font-size: 18px;
+    }
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item {
+    flex: 1 1 200px; /* アイテムが最低200pxの幅を持ち、利用可能なスペースに基づいて拡大縮小する */
+}
+/* 画像のサイズを動的に調整する */
+img {
+    max-width: 100%;
+    height: auto;
+}
+/* ボタン共通スタイル */
+button {
+    background-color: blue; /* ボタンの背景色 */
+    color: white; /* ボタンの文字色 */
+    padding: 14px 20px; /* ボタン内のパディング */
+    margin: 10px; /* 外側のマージン */
+    border: none; /* 枠線なし */
+    cursor: pointer; /* カーソルをポインターに */
+    transition: background-color 0.3s; /* 背景色の変化を滑らかに */
+    border-radius: 5px; /* 角を丸く */
+}
+
+/* ボタンホバー時 */
+button:hover {
+    background-color: palevioletred; /* ホバー時の背景色 */
+}
+
+/* ボタン非活性時 */
+button:disabled {
+    background-color: #cccccc; /* 非活性時の背景色 */
+    color: #666666; /* 非活性時の文字色 */
+    cursor: not-allowed; /* カーソルを禁止マークに */
+}
+.button-container {
+    margin-bottom: 20px; /* スペースを追加 */
+}
+
+.reaction-buttons button {
+    margin-right: 10px; /* ボタン間のスペース */
+}
+
+.reaction-buttons {
+    display: flex;
+    justify-content: center; /* ボタンを中央に配置 */
+}
+/* リアクションボタンサイズ変更 */
+.reaction-buttons img {
+    width: 300px;
+    /* 必要に応じて高さも設定できます */
+    height: auto; /* アスペクト比を保持 */
+}
+/* モーダルウィンドウ全体のスタイル */
+.modal {
+    display: none; /* 初期状態では非表示 */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* 背景色（半透明） */
+}
+
+/* モーダルウィンドウのコンテンツ部分 */
+.modal-content {
+    background-color: #fefefe; /* 背景色 */
+    margin: 15% auto; /* 上下のマージンと自動横マージン */
+    padding: 20px; /* 内側のパディング */
+    border: 1px solid #888; /* 枠線 */
+    width: 80%; /* 幅 */
+}
+
+/* モーダルの閉じるボタン */
+.close-button {
+    color: #aaa; /* 色 */
+    float: right; /* 右寄せ */
+    font-size: 28px; /* フォントサイズ */
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black; /* ホバー時やフォーカス時の色 */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* MARUMARKボタンのスタイリング */
+.marumark-button {
+    display: inline-block;
+    background-color: orange; /* 背景色 */
+    color: white; /* 文字色 */
+    padding: 10px 20px; /* パディング */
+    margin: 10px; /* マージン */
+    text-decoration: none; /* 下線を無しに */
+    font-size: 16px; /* フォントサイズ */
+    border: none; /* 枠線なし */
+    cursor: pointer; /* カーソルを指に */
+    border-radius: 5px; /* 角を丸く */
+}
+
+.marumark-button:hover {
+    background-color: darkblue; /* ホバー時の背景色 */
+}
+
+
+/* 基本的なページのスタイリング
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    
+}
+
+/* タイトルのスタイリング */
+h2 {
+    color: #444;
+}
+body {
+    background-image: url(wall.png);            
+    /* 背景画像のパスを指定 */
+    background-size: cover; /* 画像を画面にフィットさせる */
+    background-position: center; /* 画像を中央に配置 */
+    background-repeat: no-repeat; /* 画像の繰り返しを無効にする */
+}
+
+/* ボタンのスタイリング */
+button {
+    background-color: orange;
+    color: white;
+    padding: 14px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px; /* 角丸 */
+}
+
+button:hover {
+    background-color: gray;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.startButton {
+    box-sizing: border-box;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    width: 80%;
+}
+
+/* モーダルの基本スタイル */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* モーダル内コンテンツ */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* 閉じるボタン */
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* MARUMARKボタンの色や表示方法 */
+.marumark-button {
+    display: inline-block;
+    background-color: orange; /* 背景色 */
+    color: white; /* テキスト色 */
+    padding: 10px 20px; /* パディング */
+    margin: 10px; /* 余白 */
+    text-decoration: none; /* 下線を消す */
+    font-size: 16px; /* フォントサイズ */
+    border: none; /* 枠線を消す */
+    cursor: pointer; /* カーソルを指に */
+    border-radius: 5px; /* 角丸 */
+}
+/* MARUMARKボタン */
+.marumark-button:hover {
+    background-color: gray; /* ホバー時の背景色 */
+}
+
+
+.modal {
+    display: none; /* 最初は非表示 */
+    position: fixed; /* 画面に固定 */
+    left: 0;
+    top: 50%; /* 「スタート」ボタンより下に表示させるために調整 */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* 背景色 */
+    border-radius: 5px; /* 角丸 */border-radius: 5px; /* 角丸 */
+} 
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}

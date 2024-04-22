@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="a1">1111</div>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
+<script>
+// $("body").append("<div>ABC</div>");
+const link = '<a href="#">リンク</a>'
+$("#a1").html(link);
+$("#a1").css("color","#ff0000");
+$("#a1").css("background-color","#000000");
+// $("#a1").hide(2000);  //１０００が１行 ２０００が２秒
+$("#a1").fadeOut(1000).fadeIn(1000);
+$("#a1").prepend("あいうえお");  //一番上に差し込んでいく
+$("#a1").append("さしすせそ");  //一番したに差し込んでいく　LINEのような感じ
+$("#a1").prepend("ABC");  //一番上に差し込んでいく　twitterのような感じ
+
+</script>
+</body>
+</html>
