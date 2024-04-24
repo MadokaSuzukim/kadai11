@@ -1,0 +1,230 @@
+body {
+    background: linear-gradient(to right, #ee89b5 0%, #be89bd 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column; /* 要素を縦方向に並べる */
+    align-items: center; /* 要素を中央揃えにする */
+    
+}
+
+h1 {
+    margin: 20px 0;
+    align-items: center;
+}
+div {
+    padding: 20px;
+    /* border-radius: 10px; */
+}
+#output {
+    max-height: 150px; /* 最大の高さを指定（必要に応じて調整） */
+    overflow-y: auto; /* コンテンツが高さを超える場合にスクロールバーを表示 */
+    margin-bottom: auto;
+}
+textarea {
+    width: 100%;
+    height: 50px; /* 適切な高さを設定 */
+    padding: auto;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+input[type="text"], input[type="day"], textarea {
+    width: 100%;
+    padding: auto;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f03c7b;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#output {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+.remove, .update {
+    cursor: pointer;
+}
+
+.remove:hover, .update:hover {
+    opacity: 0.7;
+}
+
+/* レスポンシブ流デザイン スマートフォンや小さなデバイス向けのスタイル */
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+        justify-content: flex-start;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    div {
+        width: 100%;
+        box-shadow: none;
+    }
+
+    input[type="text"], input[type="day"], textarea {
+        margin: 5px 0;
+    }
+
+    button {
+        margin-bottom: 5px;
+    }
+
+    #output {
+        height: auto;
+        max-height: 300px;
+    }
+}
+
+/* タブレット向けのスタイル */
+@media (min-width: 601px) and (max-width: 1024px) {
+    body {
+        padding: 40px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    div {
+        width: 80%;
+    }
+
+    input[type="text"], input[type="day"], textarea {
+        margin: 8px 0;
+    }
+}
+
+/* デスクトップ向けのスタイル */
+@media (min-width: 1025px) {
+    body {
+        padding: 60px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    div {
+        width: 50%;
+    }
+} */
+
+  /* スクロールバーのスタイル */
+  #output::-webkit-scrollbar {
+    width: 12px; /* スクロールバーの幅 */
+  }
+  /* スクロールバーのトラック（スクロールバー自体の背景） */
+  #output::-webkit-scrollbar-track {
+    background: #f1f1f1; /* スクロールバーの背景色 */
+  }
+  /* スクロールバーのハンドル（スクロールされる部分） */
+  #output::-webkit-scrollbar-thumb {
+    background: #888; /* スクロールバーの色 */
+  }
+  #output {
+    height: 400px; /* 表示領域の高さを増やす */
+    overflow-y: auto; /* メッセージが表示領域を超える場合にスクロールバーを表示 */
+  }
+ 
+#affirmationListContainer {
+    max-height: 200px; /* 適切な高さを設定 */
+    overflow-y: auto;
+}
+.affirmation-item {
+    display: flex; /* 要素を横並びにする */
+    align-items: center; /* 要素を中央揃えにする */
+}
+.affirmation-text {
+    flex: 1; /* テキスト部分を残りのスペースいっぱいに拡大 */
+}
+
+.affirmation-actions {
+    margin-left: 10px; /* ボタンとテキストの間の余白 */
+}
+
+/* https://oceansschool.com/58716/ */
+
+/* フッター指定 */
+footer {
+    text-align: center; /* 中央揃え */
+    background-color: rgb(141, 143, 147); /* グレーの背景色 */
+    padding: 20px; /* 適切な余白を追加 */
+    margin: 20px 0;
+    width: 100%; /* 幅を100%に設定 */
+}
+
+
+.header {
+    background-image: url("selflove.jpg");
+    background-size: cover; /* 画像をウィンドウ全体に広げる */
+    background-position: center; /* 画像を中央に配置 */
+    background-repeat: no-repeat; /* 画像を繰り返し表示しない */
+    padding: 60px; /* ヘッダーの余白 */
+    text-align: center; /* テキストを中央揃え */
+}
+
+.header h1 {
+    color: rgb(29, 25, 25); /* テキストの色を白に設定 */
+    margin: 0; /* マージンをリセット */
+    padding: 10px; /* テキストの余白 */
+    background-color: rgb(231, 157, 157); /* 背景色を設定 */
+    display: inline-block; /* テキストをブロック要素として扱う */
+}
+
+.section {
+    border: 1px solid #241d1d;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    align-items: center; /* 要素を中央揃えにする */
+  }
+  .section-header {
+    cursor: pointer;
+    user-select: none; /* テキストの選択を無効化 */
+    padding: 10px;
+    background-color: rgb(181, 175, 175);
+    border-bottom: 1px solid #211c1c;
+  }
+  .section-content {
+    display: none; /* 最初は非表示 */
+    padding: 10px;
+  }
+
+  .section-sengen {
+    cursor: pointer;
+    user-select: none; /* テキストの選択を無効化 */
+    padding: 10px;
+    background-color: rgb(181, 175, 175);
+    border-bottom: 1px solid #211c1c;
+    text-align: center; /* テキストを中央揃え */
+    margin: 10px; /* マージンをリセット */
+  }
+  .section-sengent {
+    display: none; /* 最初は非表示 */
+    padding: 10px;
+  }
+
+  div
+{
+    padding: 0px;
+}

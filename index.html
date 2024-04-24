@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Chat App</title>
+<link rel="stylesheet" href="style3.css"> 
+
+    <!-- 設定内容 -->
+</head>
+<body>
+    <header>
+        <h1>My Self Taik </h1>
+    </header>
+    <div class="header">
+        <h1>自分と対話をしてみよう🎶</h1>
+    </div>
+        <div class="section-header">STEP1: セルフトークを書き出す</div>
+        <div class="section-content">
+          <p>
+            セルフトークを行う際に感じたことや思ったことをメモする
+            </p><p>自分の頭の中で繰り返し話している言葉や考えを書き出す</p>
+        </div>
+        <div class="section-header">STEP2: ネガティブなものとポジティブなものに分別する</div>
+        <div class="section-content">
+          <p>書き出したセルフトークを読み返し、ネガティブな言葉や考えを見つける
+           </p><p> ポジティブな言葉や考えも同様に見つける</p>
+        </div>
+            <div class="section-header">STEP3: ネガティブな自分を肯定的に受け止める</div>
+            <div class="section-content">
+              <p>ネガティブな言葉や考えを見つけたら、それらを否定せずに受け止める
+                </p><p>ネガティブな自分を肯定的に受け止める方法を見つける</p>
+            </div>
+          </div>         
+            <div class="section-header">STEP4: 理想の自分をイメージする</div>
+            <div class="section-content">
+              <p>自分が望む理想の姿や状況をイメージする
+                </p><p>理想の自分になるためのステップや方法を考える</p>
+            </div>
+        <div class="section-header">STEP5: アファメーションを追加する</div>
+        <div class="section-content">
+          <p>ポジティブな言葉や考えを見つけたら、それらをアファメーションとして書き出す
+           </p><p> アファメーションを自分に向けて繰り返し言う練習をする</p>
+        </div>
+      </div>
+    </div>
+ <!-- 設定内容 -->
+
+<!-- コンテンツ表示画面 -->
+<h2>セルフトーク送信欄</h2>
+<div>
+    名前：<input type="text" id="uname"> 
+    日付：<input type="date" id="day">
+</div>
+<div>
+    <textarea id="text" cols="30" rows="10"></textarea>
+    <button id="send">送信</button>
+</div>
+<div id="output" style="overflow: auto;height: auto;"></div>
+<!--/ コンテンツ表示画面 -->
+
+<!-- アファメーション一覧 -->
+<h1>Affirmations</h1>
+<div class="section-sengen">アファメーションとは、なりたい自分を手に入れるための自己宣言のことです。</div>
+        <div class="section-sengent">
+          <p>私はすでに、理想（なりたい自分）の状態になっている」という肯定的な文を用いて、繰り返し自分自身に宣言します。
+            </p>
+            <p>そうすることで、自分の潜在意識に働きかけ、自己肯定感と自尊心の強化をおこない、自分の理想の状態を叶えていきます</p>
+            <p>アファメーションは削除が可能です</p>
+        </div>
+
+<!-- アファメーション一覧の欄 -->
+<div id="affirmationListContainer">
+    <ul id="affirmationList"></ul>
+</div>
+
+<!-- ユーザーが入力したアファメーションを受け付けるフォーム -->
+<h2>アファメーション送信欄</h2>
+<div>
+    <input type="text" id="newAffirmation" placeholder="新しいアファメーションを入力">
+    <button id="addAffirmation">追加</button>
+</div>
+
+<div class="section-sengen">心理的安全性の担保について</div>
+        <div class="section-sengent">
+          <p>セルフトークは、コミュニティの誰もが発信できます
+            </p>
+            <p>アファメーションは自分にだけ見れます</p>
+            <p>無意識に起こるセルフトークを変えることは難しそうですが、意識的にセルフトークをコントロールすることで、考え方のクセを変えることができます。</p>
+            
+        </div>
+        <a href="home.php">ホームに戻る</a>
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--** 以下Firebase **-->
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getDatabase, ref, push, set, update, remove, onChildAdded, onChildChanged, onChildRemoved }
+from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+    
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyApiys7KPXh3WlPtWkAimEd8dRJKVVeY7k",
+      authDomain: "self-coath.firebaseapp.com",
+      databaseURL: "https://self-coath-default-rtdb.firebaseio.com",
+      projectId: "self-coath",
+      storageBucket: "self-coath.appspot.com",
+      messagingSenderId: "375259169680",
+      appId: "1:375259169680:web:f510004f6764f128542915",
+      measurementId: "G-3JB40K3NG4"
+    };
+    
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db  = getDatabase(app);//RealtimeDBに接続
+    const dbRef = ref(db, "chat");//RealtimeDB内の"chat"を使う
+
+
+    // 送信
+$("#send").on("click", function () {
+    const msg = {
+        uname: $("#uname").val(),
+        // day: $("#day").val(),
+        text: $("#text").val(),
+        datetime: formattedDateTime // 指定した形式で日時を追加
+        // datetime: new Date().toISOString() // 現在の日時をISO形式で取得し、datetimeプロパティに追加
+    }
+    // console.log(msg); //チェックしたら消す
+    const newPostRef = push(dbRef); // ユニークキーを生成
+    set(newPostRef, msg); // "chat"にユニークKEYをつけてオブジェクトデータを登録
+    console.log(newPostRef);//これをみたら、どういう処理なんかわかる！
+});
+
+    // 受診
+    // カテゴリー情報を受信する
+    onChildAdded(dbRef, function (data) {
+    const msg = data.val();
+    const key = data.key; // ユニークキー
+    let h = '<p id="' + key + '">'; // カテゴリー情報はここでは使用しない
+    h += msg.uname + " ";
+    if (msg.datetime) { // datetime プロパティが存在する場合のみ時間を表示
+        h += msg.datetime + " ";
+    }
+    h += '<span contentEditable="true" id="' + key + '_update">' + msg.text + '</span>';
+    h += '<span class="remove" data-key="' + key + '">🚮</span>';
+    h += '<span class="update" data-key="' + key + '">🆙</span>';
+    h += '</p>';
+    $("#output").prepend(h);
+});
+
+// 削除イベント
+$("#output").on("click", ".remove", function () {
+    const key = $(this).attr("data-key");
+    const remove_item = ref(db, "chat/" + key); // 参照先を修正
+    remove(remove_item); //Firebaseデータ削除関数
+});
+
+// 更新イベント
+$("#output").on("click", ".update", function () {
+    const key = $(this).attr("data-key");
+    update(ref(db, "chat/" + key), {
+        text: $("#" + key + '_update').html()
+    });
+});
+
+// 削除処理がFirebase側で実行されたら
+onChildRemoved(dbRef, (data) => {
+    $("#" + data.key).remove(); //DOM操作関数（対象を削除）
+});
+
+// 更新処理がFirebase側で実行されたらイベント発生！
+onChildChanged(dbRef, (data) => {
+    $("#" + data.key + '_update').html(data.val().text);
+    $("#" + data.key + '_update').fadeOut(800).fadeIn(800);
+});
+
+const currentDate = new Date();
+const year = currentDate.getFullYear();
+const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+const day = String(currentDate.getDate()).padStart(2, '0');
+const hours = String(currentDate.getHours()).padStart(2, '0');
+const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+<a href="home.php">ホームに戻る</a>
+
+</script>
+
+<script src="chat.js"></script>
+<footer>   
+    <small>MARUMARK</small>
+</footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

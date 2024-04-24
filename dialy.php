@@ -39,7 +39,7 @@ if (!$child_info) {
 </head>
 <body>
 <div class="container">
-    <h1>ストーリー入力</h1>
+    <h1>エピソード入力</h1>
     <h1>今日も育児お疲れ様！</h1>
     <p><?= htmlspecialchars($child_info['nickname']) ?>は、今日どんな様子だった？</p>
 

@@ -51,8 +51,8 @@ $diaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 <div class="container">
-    <h1>ストーリー一覧</h1>
-    <p><?= htmlspecialchars($_SESSION['nickname']) ?>のストーリー</p>
+    <h1>エピソード一覧</h1>
+    <p><?= htmlspecialchars($_SESSION['nickname']) ?>のエピソード</p>
     <a href="children_list.php">子供一覧に戻る</a>
     <?php if ($diaries): ?>
         <ul>
@@ -61,7 +61,7 @@ $diaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php endforeach; ?>
         </ul>
     <?php else: ?>
-        <p>この子供には登録された日記がありません。</p>
+        <p>この子供には登録されたエピソードがありません。</p>
     <?php endif; ?>
     <a href="home.php">ホームに戻る</a>
 </div>
